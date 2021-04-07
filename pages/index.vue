@@ -1,6 +1,8 @@
 <template>
   <div class="container">
-    hello {{ myroute }}
+    <client-only>
+      <Badge :texto="badgeName" />
+    </client-only>
   </div>
 </template>
 
@@ -11,13 +13,14 @@ let DOC_KEY = process.env.DOC_KEY
 export default {
   data(){
     return {
-      myroute: ''
+      myfoo: '',
+      badgeName: 'Awesome'
     }
   },
 
   mounted(){
     //http://localhost:3000/?foo=%22bar%22 works
-    this.myroute = this.$route.query.foo;
+    this.myfoo = this.$route.query.foo;
 
     GetSheetDone.raw(DOC_KEY).then(sheet => {
       console.log(sheet)

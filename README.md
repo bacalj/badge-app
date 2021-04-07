@@ -1,5 +1,9 @@
 # badge-app
 
+##
+
+pulls data from a Google sheet
+
 ## Build Setup
 
 ```bash
