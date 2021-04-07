@@ -49,6 +49,7 @@ export default {
   },
 
   env: {
-    DOC_KEY: process.env.DOC_KEY
+    DOC_KEY: process.env.DOC_KEY,
+    PASSWORD: process.env.PASSWORD
   }
 }
