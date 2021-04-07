@@ -5,9 +5,15 @@
 </template>
 
 <script>
+import GetSheetDone from 'get-sheet-done';
+let DOC_KEY = process.env.DOC_KEY
 
 export default {
-
+  mounted(){
+    GetSheetDone.raw(DOC_KEY).then(sheet => {
+      console.log(sheet)
+    })
+  }
 }
 </script>
 
