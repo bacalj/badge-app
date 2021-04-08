@@ -7,14 +7,22 @@
     </div>
 
     <div v-show="passwordIn">
-      <div v-if="currentStudentData">
+      <div v-if="currentStudentData.length > 0">
+        <div class="student-name">
+          <h2>{{ currentStudentData[0]}}</h2>
+        </div>
         <ul class="earnedBadges">
+          <!-- really ick at moment, we skip first index because its the name right now, and allOpenBadges var is already built off offset -->
           <li v-for="(badge, i) in currentStudentData" :key="i">
-            <div v-if="i > 0">
-              {{ allOpenBadges[i - 1] }} : {{ badge }}
+            <div class="badge" v-if="i > 0" :class="{ 'is-earned': badge == 'TRUE', 'not-earned' : badge == 'FALSE' }">
+              {{ allOpenBadges[i - 1] }}
             </div>
           </li>
         </ul>
+      </div>
+
+      <div v-else>
+        Nothing to see here ... you need to go to a student's link.
       </div>
 
     </div>
@@ -75,5 +83,12 @@ export default {
 
 <style lang="postcss">
 
+.is-earned {
+  color: blue;
+}
+
+.not-earned {
+  color: silver;
+}
 </style>>
 
