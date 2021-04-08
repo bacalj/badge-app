@@ -1,16 +1,14 @@
 <template>
   <div class="container">
+    <h2 v-if="currentStudentData">Student: {{ currentStudentData[0] }}</h2>
+
     <div class="password" v-show="!passwordIn">
       Type in the password:
       <input type="text" v-model="passwordFieldValue" placeholder="type password">
     </div>
 
     <div v-show="passwordIn">
-      <client-only>
-        <div v-for="(badge, i) in badges" :key="i">
-          <Badge :texto="badge.title" />
-        </div>
-      </client-only>
+      ok u are in
     </div>
 
   </div>
@@ -25,23 +23,38 @@ let PASSWORD = process.env.PASSWORD
 export default {
   data(){
     return {
-      studentName: '',
+      studentName: null,
       password: PASSWORD,
       passwordFieldValue: '',
-      badges: [
-        { title: 'Awesome' },
-        { title: 'Cool' }
-      ]
+      allOpenBadges: [],
+      currentStudentData: []
     }
   },
 
   mounted(){
     /* /?student=foobert */
-    this.studentName = this.$route.query.student;
+    if (this.$route.query.student){
+      this.studentName = this.$route.query.student.toLowerCase();
+    }
+
 
     GetSheetDone.raw(DOC_KEY).then(sheet => {
-      console.log(sheet)
+
+      // get a list of all the badges
+      this.allOpenBadges = sheet.data[0].slice(1);
+
+      // if we have a query param for a student, pull their data into localness
+      if ( this.studentName ){
+        sheet.data.forEach(arr => {
+          let myhead = arr[0].toLowerCase();
+          if (myhead == this.studentName){
+            this.currentStudentData = arr;
+          }
+        });
+      }
     })
+
+
   },
 
   computed: {
@@ -54,7 +67,7 @@ export default {
 
 <style lang="postcss">
 .container {
-  @apply min-h-screen flex justify-center items-center text-center mx-auto;
+  width:300px;
 }
 </style>>
 
