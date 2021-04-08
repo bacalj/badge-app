@@ -1,14 +1,22 @@
 <template>
   <div class="container">
-    <h2 v-if="currentStudentData">Student: {{ currentStudentData[0] }}</h2>
 
-    <div class="password" v-show="!passwordIn">
-      Type in the password:
-      <input type="text" v-model="passwordFieldValue" placeholder="type password">
+    <div class="password flex items-center justify-center h-screen" v-show="!passwordIn">
+      Type in the password: &nbsp;
+      <input type="text" v-model="passwordFieldValue" placeholder="type it here">
     </div>
 
     <div v-show="passwordIn">
-      ok u are in
+      <div v-if="currentStudentData">
+        <ul class="earnedBadges">
+          <li v-for="(badge, i) in currentStudentData" :key="i">
+            <div v-if="i > 0">
+              {{ allOpenBadges[i - 1] }} : {{ badge }}
+            </div>
+          </li>
+        </ul>
+      </div>
+
     </div>
 
   </div>
@@ -66,8 +74,6 @@ export default {
 </script>
 
 <style lang="postcss">
-.container {
-  width:300px;
-}
+
 </style>>
 
